@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="p4.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+     <div class="main_div">
+        <div class="music_container">
+            <h1 id="title">FIGHT BACK</h1>
+            <h4 id="artist">NEFFEX</h4>
+            <div class="img_container">
+                 <img src="D:\project1\Music Player\Neffex.jfif" alt="">
+            </div>
+            <audio src="D:\project1\Music Player\Neffex.mp3"></audio>
+            <div class="music_controls">
+                <i class="fas fa-backward" id="prev" title="Previous"></i>
+                <i class="fas fa-play main_button" id="play" title="Play"></i>
+                <i class="fas fa-forward" id="next" title="Next"></i>
+            </div>
+        </div>
+     </div>
+     <script>
+        const img =document.querySelector("img");
+        const music=document.querySelector("audio");
+        const artist= document.getElementById("artist");
+        const title= document.getElementById("title");
+        const prev= document.getElementById("prev");
+        const next= document.getElementById("next");
+        const play= document.getElementById("play");
+        
+        const songs =[
+            {
+            name:"Neffex",
+            title:"FIGHT BACK",
+            artist:"NEFFEX",
+        },
+        {
+            name:"Payphone",
+            title:"PayPhone",
+            artist:"Maroon 5",
+        },
+        {
+            name:"Devil Eyes",
+            title:"Devil Eyes",
+            artist:"Snoop Dogg",
+        },
+        {
+            name:"Madara Speech",
+            title:"Uchiha's Ghost",
+            artist:"Madara Uchiha",
+        },
+    ];
+
+        let isPlaying = false;
+
+        const playMusic=() =>{
+            isPlaying = true;
+            music.play();
+            play.classList.replace("fa-play","fa-pause");
+            img.classList.add("anime");
+        };
+
+        const pauseMusic=() =>{
+            isPlaying = false;
+            music.pause();
+            play.classList.replace("fa-pause","fa-play");
+            img.classList.remove("anime");
+        };
+
+        play.addEventListener('click',()=>{
+            isPlaying ? pauseMusic():playMusic();
+        });
+
+        const loadSong = (songs) => {
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src= "D:/project1/Music Player/"+ songs.name +".mp3";
+            img.src= "D:/project1/Music Player/"+ songs.name +".jfif";
+        };
+
+        songIndex = 0;
+        //loadSong(songs[2]);
+        const nextSong=() =>{
+            songIndex = (songIndex +1) % songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        };
+        const prevSong=() =>{
+            songIndex = (songIndex -1 + songs.length)% songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        };
+
+        next.addEventListener('click',nextSong);
+        prev.addEventListener('click',prevSong);
+     </script>
+</body>
+</html>
